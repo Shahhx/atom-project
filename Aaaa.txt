@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع الذرة - شهد راشد، لمى سليم، أبرار عطالله</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; color: white; }
+    canvas { display: block; }
+    #content { position: absolute; top: 20px; left: 20px; width: 300px; z-index: 1; }
+    #content h1, #content p { font-size: 16px; }
+    footer { position: absolute; bottom: 20px; left: 20px; color: white; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <h1>تعريف الذرة</h1>
+    <p>الذرة هي أصغر وحدة بناء للمادة. تتكون الذرة من:</p>
+    <ul>
+      <li><strong>نواة</strong>: تحتوي على <strong>بروتونات</strong> (شحنة موجبة) و <strong>نيوترونات</strong> (لا شحنة).</li>
+      <li><strong>إلكترونات</strong>: تدور حول النواة في مدارات محددة.</li>
+    </ul>
+    <p>البروتونات تحدد نوع العنصر بينما الإلكترونات تتفاعل مع العناصر الأخرى لتكوين المركبات.</p>
+    <p>الذرة هي أساس تكوين جميع المواد حولنا، مثل الماء، الهواء، والمعادن.</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // إعداد المشهد
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // إضافة المجسمات (النواة + الإلكترونات)
+    var geometry = new THREE.SphereGeometry(1, 32, 32);
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var nucleus = new THREE.Mesh(geometry, material);
+    scene.add(nucleus);
+
+    var electronGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+    var electronMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var electron = new THREE.Mesh(electronGeometry, electronMaterial);
+    scene.add(electron);
+
+    // حركة الإلكترون حول النواة
+    var electronOrbitRadius = 3;
+    var angle = 0;
+
+    camera.position.z = 10;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // حركة الإلكترون
+      angle += 0.01;
+      electron.position.x = electronOrbitRadius * Math.cos(angle);
+      electron.position.z = electronOrbitRadius * Math.sin(angle);
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+
+  <footer>
+    <p>مكونات المشروع: شهد راشد، لمى سليم، أبرار عطالله</p>
+  </footer>
+</body>
+</html>
